@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Vanakam AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+
+    <div class="background">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+
+    <!-- CHATBOT -->
+
+    <div class="chatbot">
+
+
+        <!-- HEADER -->
+
+        <header class="chat-header">
+
+            <div class="profile">
+
+                <div class="avatar">
+
+                    <div class="robot-face">
+                        ⚇
+                    </div>
+
+                    <span class="online-dot"></span>
+
+                </div>
+
+
+                <div class="profile-info">
+
+                    <h2>Vanakam AI</h2>
+
+                    <p>
+                        <span class="pulse"></span>
+                        Online
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- <div class="header-buttons">
+
+                <button title="Settings">
+                    ⚙
+                </button> -->
+
+                <!-- <button title="More">
+                    ⋮
+                </button>
+
+            </div> -->
+
+        </header>
+
+
+
+        <!-- CHAT -->
+
+        <main class="chat-area" id="chatArea">
+
+
+            <!-- Welcome -->
+
+            <div class="welcome">
+
+                <div class="welcome-icon">
+                    ✨
+                </div>
+
+                <h1>Hello there!</h1>
+
+                <p>
+                    I'm Vanakam, your AI assistant.
+                </p>
+
+                <div class="suggestions">
+
+                    <button onclick="sendSuggestion('Hii')">
+                        👋 Say Hi
+                    </button>
+
+                    <button onclick="sendSuggestion('Who are you')">
+                        🤖 Who are you?
+                    </button>
+
+                    <button onclick="sendSuggestion('How are you')">
+                        💬 How are you?
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </main>
+
+
+
+        <!-- INPUT -->
+
+        <footer class="input-area">
+
+
+            <!-- <button class="icon-button">
+                📎
+            </button> -->
+
+
+            <div class="input-wrapper">
+
+                <input
+                    type="text"
+                    id="userInput"
+                    placeholder="Message Vanakam...."
+                    autocomplete="off"
+                >
+
+                <span class="typing-cursor"></span>
+
+            </div>
+
+
+            <button
+                id="sendButton"
+                class="send-button">
+
+                <span>➤</span>
+
+            </button>
+
+
+        </footer>
+
+
+        <p class="powered">
+            Powered by Vanakam AI • Responses may vary
+        </p>
+
+
+    </div>
+
+
+
+<script>
+
+
+const input =
+    document.getElementById("userInput");
+
+
+const sendButton =
+    document.getElementById("sendButton");
+
+
+const chatArea =
+    document.getElementById("chatArea");
+
+
+
+/* ==============================
+   SEND BUTTON
+   ============================== */
+
+sendButton.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+
+/* ==============================
+   ENTER KEY
+   ============================== */
+
+input.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+
+/* ==============================
+   SUGGESTION BUTTON
+   ============================== */
+
+function sendSuggestion(message) {
+
+    input.value = message;
+
+    sendMessage();
+
+}
+
+
+
+/* ==============================
+   SEND MESSAGE
+   ============================== */
+
+async function sendMessage() {
+
+    const message =
+        input.value.trim();
+
+
+    if (message === "") {
+
+        return;
+
+    }
+
+
+    addUserMessage(message);
+
+
+    input.value = "";
+
+
+    /* Typing indicator */
+
+    const typing =
+        createTypingIndicator();
+
+
+    chatArea.appendChild(typing);
+
+
+    scrollToBottom();
+
+
+
+    try {
+
+        const response =
+            await fetch("/chat", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    message: message
+                })
+
+            });
+
+
+
+        const data =
+            await response.json();
+
+
+
+        /* Remove typing */
+
+        typing.remove();
+
+
+        /* Add bot response */
+
+        addBotMessage(
+            data.response
+        );
+
+
+    }
+
+    catch (error) {
+
+        typing.remove();
+
+        addBotMessage(
+            "Something went wrong 😢"
+        );
+
+        console.error(error);
+
+    }
+
+}
+
+
+
+/* ==============================
+   USER MESSAGE
+   ============================== */
+
+function addUserMessage(message) {
+
+    const messageBox =
+        document.createElement("div");
+
+
+    messageBox.className =
+        "message user-message";
+
+
+    messageBox.innerHTML = `
+
+        <div class="bubble">
+
+            <p>${message}</p>
+
+            <span>Now</span>
+
+        </div>
+
+    `;
+
+
+    chatArea.appendChild(messageBox);
+
+
+    scrollToBottom();
+
+}
+
+
+
+/* ==============================
+   BOT MESSAGE
+   ============================== */
+
+function addBotMessage(message) {
+
+    const messageBox =
+        document.createElement("div");
+
+
+    messageBox.className =
+        "message bot-message";
+
+
+    messageBox.innerHTML = `
+
+        <div class="small-avatar">
+            🤖
+        </div>
+
+        <div class="bubble">
+
+            <p>${message}</p>
+
+            <span>Now</span>
+
+        </div>
+
+    `;
+
+
+    chatArea.appendChild(messageBox);
+
+
+    scrollToBottom();
+
+}
+
+
+
+/* ==============================
+   TYPING INDICATOR
+   ============================== */
+
+function createTypingIndicator() {
+
+    const typing =
+        document.createElement("div");
+
+
+    typing.className =
+        "message bot-message typing-message";
+
+
+    typing.innerHTML = `
+
+        <div class="small-avatar">
+            🤖
+        </div>
+
+        <div class="typing-bubble">
+
+            <i></i>
+            <i></i>
+            <i></i>
+
+        </div>
+
+    `;
+
+
+    return typing;
+
+}
+
+
+
+/* ==============================
+   AUTO SCROLL
+   ============================== */
+
+function scrollToBottom() {
+
+    chatArea.scrollTo({
+
+        top: chatArea.scrollHeight,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+</script>
+
+</body>
+<!-- Swarm Cursor -->
+<div class="swarm-cursor">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<script>
+const swarm = document.querySelector(".swarm-cursor");
+const particles = swarm.querySelectorAll("span");
+
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+particles.forEach((particle, index) => {
+
+    let x = mouseX;
+    let y = mouseY;
+
+    function animate() {
+
+        x += (mouseX - x) * (0.15 - index * 0.005);
+        y += (mouseY - y) * (0.15 - index * 0.005);
+
+        particle.style.transform =
+            `translate(${x}px, ${y}px)`;
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+});
+</script>
+</html>
+<!-- =========================================
+     FERROFLUID BACKGROUND
+     Add this immediately after <body>
+     ========================================= -->
+
+     <div class="ferrofluid-bg">
+        <div class="ferro-core"></div>
+        <div class="ferro-blob ferro-blob-1"></div>
+        <div class="ferro-blob ferro-blob-2"></div>
+        <div class="ferro-blob ferro-blob-3"></div>
+        <div class="ferro-blob ferro-blob-4"></div>
+        <div class="ferro-blob ferro-blob-5"></div>
+    </div>
+    
+    <style>
+    /* =========================================
+       FERROFLUID BACKGROUND
+       ========================================= */
+    
+    .ferrofluid-bg {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: -2;
+        background:
+            radial-gradient(
+                circle at 50% 50%,
+                #111827 0%,
+                #050816 45%,
+                #02030a 100%
+            );
+    }
+    
+    /* Main magnetic glow */
+    
+    .ferro-core {
+        position: absolute;
+        width: 420px;
+        height: 420px;
+        left: 50%;
+        top: 50%;
+    
+        transform: translate(-50%, -50%);
+    
+        border-radius: 50%;
+    
+        background:
+            radial-gradient(
+                circle,
+                rgba(34, 211, 238, .25),
+                rgba(54, 57, 238, 0.584) 35%,
+                transparent 70%
+            );
+    
+        filter: blur(25px);
+    
+        animation:
+            ferroCore 7s ease-in-out infinite;
+    }
+    
+    /* Ferrofluid blobs */
+    
+    .ferro-blob {
+        position: absolute;
+    
+        width: 180px;
+        height: 180px;
+    
+        border-radius: 50%;
+    
+        background:
+            radial-gradient(
+                circle at 35% 30%,
+                #e0f2fe 0%,
+                #38bdf8 5%,
+                #36afe7 12%,
+                #4744b3 35%,
+                #47528d 65%,
+                transparent 72%
+            );
+    
+        filter:
+            contrast(150%)
+            blur(2px);
+    
+        opacity: .65;
+    
+        box-shadow:
+            0 0 35px rgba(14, 165, 233, .25);
+    
+        animation:
+            ferroFloat 9s ease-in-out infinite;
+    }
+    
+    /* Different blobs */
+    
+    .ferro-blob-1 {
+        left: 8%;
+        top: 12%;
+        width: 220px;
+        height: 220px;
+        animation-delay: 0s;
+    }
+    
+    .ferro-blob-2 {
+        right: 5%;
+        top: 18%;
+        width: 150px;
+        height: 150px;
+        animation-delay: -2s;
+    }
+    
+    .ferro-blob-3 {
+        left: 20%;
+        bottom: 5%;
+        width: 190px;
+        height: 190px;
+        animation-delay: -4s;
+    }
+    
+    .ferro-blob-4 {
+        right: 18%;
+        bottom: 8%;
+        width: 230px;
+        height: 230px;
+        animation-delay: -6s;
+    }
+    
+    .ferro-blob-5 {
+        left: 45%;
+        top: 10%;
+        width: 110px;
+        height: 110px;
+        animation-delay: -3s;
+    }
+    
+    /* Magnetic movement */
+    
+    @keyframes ferroFloat {
+    
+        0% {
+            transform:
+                translate(0, 0)
+                scale(1)
+                rotate(0deg);
+    
+            border-radius:
+                50% 45% 55% 48%;
+        }
+    
+        25% {
+            transform:
+                translate(80px, -40px)
+                scale(1.15)
+                rotate(45deg);
+    
+            border-radius:
+                40% 60% 45% 55%;
+        }
+    
+        50% {
+            transform:
+                translate(20px, 70px)
+                scale(.85)
+                rotate(120deg);
+    
+            border-radius:
+                60% 40% 55% 45%;
+        }
+    
+        75% {
+            transform:
+                translate(-70px, 25px)
+                scale(1.2)
+                rotate(220deg);
+    
+            border-radius:
+                45% 55% 40% 60%;
+        }
+    
+        100% {
+            transform:
+                translate(0, 0)
+                scale(1)
+                rotate(360deg);
+    
+            border-radius:
+                50% 45% 55% 48%;
+        }
+    }
+    
+    /* Core magnetic breathing */
+    
+    @keyframes ferroCore {
+    
+        0%,
+        100% {
+            transform:
+                translate(-50%, -50%)
+                scale(.8);
+    
+            opacity: .45;
+        }
+    
+        50% {
+            transform:
+                translate(-50%, -50%)
+                scale(1.4);
+    
+            opacity: .8;
+        }
+    }
+    
+    /* Magnetic waves */
+    
+    .ferrofluid-bg::before,
+    .ferrofluid-bg::after {
+        content: "";
+    
+        position: absolute;
+    
+        left: 50%;
+        top: 50%;
+    
+        width: 500px;
+        height: 500px;
+    
+        transform: translate(-50%, -50%);
+    
+        border-radius: 50%;
+    
+        border:
+            1px solid rgba(255, 255, 255, 0.753);
+    
+        animation:
+            ferroWave 5s linear infinite;
+    }
+    
+    .ferrofluid-bg::after {
+        animation-delay: 2.5s;
+    }
+    
+    @keyframes ferroWave {
+    
+        0% {
+            transform:
+                translate(-50%, -50%)
+                scale(.3);
+    
+            opacity: .8;
+        }
+    
+        100% {
+            transform:
+                translate(-50%, -50%)
+                scale(2);
+    
+            opacity: 0;
+        }
+    }
+    
+    /* Small magnetic particles */
+    
+    .ferrofluid-bg {
+        background-image:
+            radial-gradient(
+                circle,
+                rgba(125, 211, 252, .35) 1px,
+                transparent 1px
+            );
+    
+        background-size: 45px 45px;
+    
+        animation:
+            magneticGrid 20s linear infinite;
+    }
+    
+    @keyframes magneticGrid {
+    
+        from {
+            background-position: 0 0;
+        }
+    
+        to {
+            background-position: 90px 90px;
+        }
+    }
+    
+    /* Mobile */
+    
+    @media (max-width: 700px) {
+    
+        .ferro-blob {
+            opacity: .35;
+            transform: scale(.7);
+        }
+    
+        .ferro-core {
+            width: 280px;
+            height: 280px;
+        }
+    }
+    </style>
