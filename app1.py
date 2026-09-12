@@ -25,6 +25,9 @@ def get_bot_response(user_input):
 
     if user_input in ["hi", "hii", "hello", "hey", "vanakkam"]:
         return "Hello da! 👋 எப்படி இருக்க?"
+    
+    elif "nalla iruka nee epdi iruka" in user_input:
+        return "Naa eppovume nalla thada irupe.."
 
     elif "good morning" in user_input:
         return "Good Morning! ☀️ Have a great day!"
