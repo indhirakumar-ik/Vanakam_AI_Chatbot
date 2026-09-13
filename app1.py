@@ -26,6 +26,9 @@ def get_bot_response(user_input):
     if user_input in ["hi", "hii", "hello", "hey", "vanakkam"]:
         return "Hello da! 👋 எப்படி இருக்க?"
     
+    elif "say my name" in user_input:
+        return "Theriyathu sollu..?"
+    
     elif "nalla iruka nee epdi iruka" in user_input:
         return "Naa eppovume nalla thada irupe.."
 
@@ -70,19 +73,19 @@ def get_bot_response(user_input):
             return "Tell me your name properly 😄"
         
     elif "python" in user_input:
-        return "Python is a beginner-friendly programming language 🐍"
+        return "Python is a high-level, interpreted programming language celebrated for its readability, simplicity, and immense versatility. Created by Guido van Rossum and first released in 1991, Python's design philosophy prioritizes clean code that reads almost like plain English. Because it supports multiple programming paradigms—including object-oriented, procedural, and functional programming—it has become the language of choice for beginners and industry giants alike."
 
     elif "java" in user_input:
-        return "Java is an object-oriented programming language ☕"
+        return "Java is a versatile, object-oriented programming language and computing platform designed around the foundational philosophy of Write Once, Run Anywhere (WORA). Originally created by James Gosling at Sun Microsystems in 1995 (which was later acquired by Oracle Corporation), it compiles your source code into a universal format called bytecode. This bytecode runs seamlessly on any device equipped with a Java Virtual Machine (JVM), making Java highly cross-platform and reliable for everything from mobile apps to heavy-duty enterprise systems"
 
     elif "html" in user_input:
-        return "HTML is used to create the structure of a website 🌐"
+        return "HTML (HyperText Markup Language): The structure and content of the webpage. It uses tags to define headings, paragraphs, images, links, and forms.🌐"
 
     elif "css" in user_input:
-        return "CSS is used to style and design a website 🎨"
+        return "CSS (Cascading Style Sheets): The presentation and layout of the webpage. It controls colors, fonts, spacing, sizing, backgrounds, and responsive layouts for mobile devices.🎨"
 
     elif "javascript" in user_input or "js" == user_input:
-        return "JavaScript makes websites interactive ⚡"
+        return "JavaScript (JS): The interactivity and behavior of the webpage. It handles animations, dynamic content changes, user input validation, and communication with web servers.⚡"
 
     elif "flask" in user_input:
         return "Flask is a lightweight Python web framework 🔥"
