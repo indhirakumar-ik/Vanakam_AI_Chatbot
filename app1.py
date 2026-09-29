@@ -559,6 +559,10 @@ def get_bot_response(user_input):
 
         return "I'm good da 😎"
 
+    if "who are you" in text:
+
+        return "iam your AI assistant Vanakam"
+
 
     if "what are you doing" in text:
 
