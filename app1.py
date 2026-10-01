@@ -336,7 +336,7 @@ def rock_paper_scissors(user_choice):
         and computer == "paper"
     ):
 
-        result = "You win! 🎉"
+        result = "You win! 👏🥲"
 
     else:
 
