@@ -11,11 +11,6 @@ app = Flask(__name__)
 
 CHAT_FILE = "chat_history.txt"
 
-
-# ============================================================
-# SAVE CHAT TO FILE
-# ============================================================
-
 def save_chat(user_message, bot_response):
 
     current_time = datetime.now().strftime(
@@ -30,11 +25,6 @@ def save_chat(user_message, bot_response):
         file.write(f"Bot  : {bot_response}\n")
         file.write("=" * 60 + "\n\n")
 
-
-# ============================================================
-# OPEN WEBSITE
-# ============================================================
-
 def open_website(url, name):
 
     try:
@@ -43,11 +33,6 @@ def open_website(url, name):
 
     except Exception:
         return f"I couldn't open {name}."
-
-
-# ============================================================
-# GOOGLE SEARCH
-# ============================================================
 
 def google_search(query):
 
@@ -59,12 +44,7 @@ def google_search(query):
     webbrowser.open(url)
 
     return f"Searching Google for '{query}' 🔎"
-
-
-# ============================================================
-# YOUTUBE SEARCH
-# ============================================================
-
+    
 def youtube_search(query):
 
     url = (
@@ -77,9 +57,6 @@ def youtube_search(query):
     return f"Searching YouTube for '{query}' ▶️"
 
 
-# ============================================================
-# OPEN WINDOWS APPLICATION
-# ============================================================
 
 def open_application(app_name):
 
@@ -120,10 +97,6 @@ def open_application(app_name):
         return f"Unable to open {app_name}."
 
 
-# ============================================================
-# PLAY MUSIC
-# ============================================================
-
 def play_music(song):
 
     url = (
@@ -134,11 +107,6 @@ def play_music(song):
     webbrowser.open(url)
 
     return f"Searching YouTube for {song} 🎵"
-
-
-# ============================================================
-# WEATHER
-# ============================================================
 
 def weather(city):
 
@@ -152,10 +120,6 @@ def weather(city):
     return f"Checking weather in {city} 🌤️"
 
 
-# ============================================================
-# TIME
-# ============================================================
-
 def get_time():
 
     current_time = datetime.now().strftime(
@@ -164,10 +128,6 @@ def get_time():
 
     return f"The current time is {current_time} ⏰"
 
-
-# ============================================================
-# DATE
-# ============================================================
 
 def get_date():
 
@@ -178,10 +138,6 @@ def get_date():
     return f"Today's date is {current_date} 📅"
 
 
-# ============================================================
-# DAY
-# ============================================================
-
 def get_day():
 
     current_day = datetime.now().strftime(
@@ -190,10 +146,6 @@ def get_day():
 
     return f"Today is {current_day} 📆"
 
-
-# ============================================================
-# CALCULATOR
-# ============================================================
 
 def calculate(expression):
 
@@ -247,10 +199,6 @@ def calculate(expression):
         return "I couldn't calculate that expression."
 
 
-# ============================================================
-# RANDOM NUMBER
-# ============================================================
-
 def random_number():
 
     number = random.randint(1, 100)
@@ -258,9 +206,6 @@ def random_number():
     return f"Your random number is {number} 🎲"
 
 
-# ============================================================
-# COIN TOSS
-# ============================================================
 
 def coin_toss():
 
@@ -271,20 +216,12 @@ def coin_toss():
     return f"It's {result}! 🪙"
 
 
-# ============================================================
-# DICE
-# ============================================================
-
 def roll_dice():
 
     result = random.randint(1, 6)
 
     return f"You rolled {result}! 🎲"
 
-
-# ============================================================
-# PASSWORD GENERATOR
-# ============================================================
 
 def generate_password():
 
@@ -301,11 +238,6 @@ def generate_password():
     )
 
     return f"Your generated password is:\n{password} 🔐"
-
-
-# ============================================================
-# ROCK PAPER SCISSORS
-# ============================================================
 
 def rock_paper_scissors(user_choice):
 
