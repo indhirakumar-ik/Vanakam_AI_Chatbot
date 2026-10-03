@@ -281,9 +281,6 @@ def rock_paper_scissors(user_choice):
     )
 
 
-# ============================================================
-# SYSTEM INFORMATION
-# ============================================================
 
 def system_info():
 
@@ -297,11 +294,6 @@ def system_info():
         f"Version         : {version}\n"
         f"Machine         : {machine}"
     )
-
-
-# ============================================================
-# COMMAND LIST
-# ============================================================
 
 def show_help():
 
@@ -416,26 +408,13 @@ I will give the default response.
 """
 
 
-# ============================================================
-# MAIN CHATBOT LOGIC
-# ============================================================
-
 def get_bot_response(user_input):
 
     text = user_input.lower().strip()
 
 
-    # ========================================================
-    # EMPTY
-    # ========================================================
-
     if text == "":
-        return "Please type something 😄"
-
-
-    # ========================================================
-    # GREETINGS
-    # ========================================================
+        return "Please type something ra😄"
 
     if text in [
         "hi",
@@ -467,10 +446,6 @@ def get_bot_response(user_input):
 
         return "Good Night! 🌙 Sleep well 😴"
 
-
-    # ========================================================
-    # PERSONAL CONVERSATION
-    # ========================================================
 
     if "say my name" in text:
 
@@ -534,10 +509,6 @@ def get_bot_response(user_input):
             "Python, Flask, HTML, CSS and JavaScript 🚀"
         )
 
-
-    # ========================================================
-    # USER NAME
-    # ========================================================
 
     if "my name is" in text:
 
