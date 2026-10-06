@@ -669,9 +669,6 @@ def get_bot_response(user_input):
             return google_search(query)
 
 
-    # ========================================================
-    # YOUTUBE SEARCH
-    # ========================================================
 
     if text.startswith(
         "search youtube for "
@@ -699,11 +696,6 @@ def get_bot_response(user_input):
         if query:
 
             return youtube_search(query)
-
-
-    # ========================================================
-    # WEATHER
-    # ========================================================
 
     if text.startswith("weather in "):
 
