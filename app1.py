@@ -444,7 +444,7 @@ def get_bot_response(user_input):
 
     if "good night" in text:
 
-        return "Good Night! 🌙 Sleep well 😴"
+        return "Good Night! 🌙 Sweet dreams😴"
 
 
     if "say my name" in text:
